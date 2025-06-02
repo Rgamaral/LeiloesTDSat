@@ -23,4 +23,8 @@ Sistema de leilões desenvolvido para automatizar as operações de uma casa de 
 2. **Configuração**:
    ```bash
    git clone https://github.com/Rgamaral/LeiloesTDSat.git
+<<<<<<< HEAD
    Importe o banco de dados (uc11.sql)
+=======
+   Importe o banco de dados (uc11.sql)
+>>>>>>> e9844b2236deed5d03fd6957cd9a138c70cd1254
