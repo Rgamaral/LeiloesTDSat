@@ -138,24 +138,27 @@ public class cadastroVIEW extends javax.swing.JFrame {
         String nome = cadastroNome.getText();
         String valor = cadastroValor.getText();
         
-        // Validação dos campos
         if(nome.isEmpty() || valor.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
             return;
         }
         
+        int valorInt = Integer.parseInt(valor);
+        if(valorInt <= 0) {
+            JOptionPane.showMessageDialog(null, "O valor deve ser positivo!");
+            return;
+        }
+        
         produto.setNome(nome);
-        produto.setValor(Integer.parseInt(valor));
-        produto.setStatus("A Venda"); // Status padrão
+        produto.setValor(valorInt);
+        produto.setStatus("A Venda");
         
         ProdutosDAO produtodao = new ProdutosDAO();
         produtodao.cadastrarProduto(produto);
         
-        // Limpa os campos após salvar
         cadastroNome.setText("");
         cadastroValor.setText("");
         
-        JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
     } catch(NumberFormatException e) {
         JOptionPane.showMessageDialog(null, "O valor deve ser um número válido!");
     } 

@@ -13,7 +13,7 @@ public class ProdutosDAO {
     ArrayList<ProdutosDTO> listagem = new ArrayList<>();
     
     public void cadastrarProduto (ProdutosDTO produto){
-        conn = new conectaDAO().connectDB(); // Remover o comentário
+        conn = new ConectaDAO().connectDB(); // Remover o comentário
     
     try {
         String sql = "INSERT INTO produtos(nome, valor, status) VALUES(?,?,?)";
@@ -28,7 +28,7 @@ public class ProdutosDAO {
     }
     
     public ArrayList<ProdutosDTO> listarProdutos(){
-        conn = new conectaDAO().connectDB();
+        conn = new ConectaDAO().connectDB();
     
     try {
         String sql = "SELECT * FROM produtos";

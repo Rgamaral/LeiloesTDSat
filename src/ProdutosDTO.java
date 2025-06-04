@@ -13,24 +13,25 @@ public class ProdutosDAO {
     ArrayList<ProdutosDTO> listagem = new ArrayList<>();
     
     public void cadastrarProduto(ProdutosDTO produto) {
-        conn = new conectaDAO().connectDB();
+        conn = new ConectaDAO().connectDB();
     
-         try {
+        try {
             String sql = "INSERT INTO produtos(nome, valor, status) VALUES(?,?,?)";
             prep = conn.prepareStatement(sql);
             prep.setString(1, produto.getNome());
             prep.setInt(2, produto.getValor());
             prep.setString(3, produto.getStatus());
             prep.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar: " + e.getMessage());
+        } finally {
+            closeResources();
         }
     }
     
-     public ArrayList<ProdutosDTO> listarProdutos() {
-        listagem.clear(); // Limpa a lista antes de adicionar novos itens
-        conn = new conectaDAO().connectDB();
+    public ArrayList<ProdutosDTO> listarProdutos() {
+        listagem.clear();
+        conn = new ConectaDAO().connectDB();
     
         try {
             String sql = "SELECT * FROM produtos";
@@ -47,12 +48,14 @@ public class ProdutosDAO {
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao listar: " + e.getMessage());
+        } finally {
+            closeResources();
         }
         return listagem;
     }
     
     public void venderProduto(int id) {
-        conn = new conectaDAO().connectDB();
+        conn = new ConectaDAO().connectDB();
         
         try {
             String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
@@ -62,6 +65,18 @@ public class ProdutosDAO {
             JOptionPane.showMessageDialog(null, "Produto vendido com sucesso!");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao vender produto: " + e.getMessage());
+        } finally {
+            closeResources();
+        }
+    }
+    
+    private void closeResources() {
+        try {
+            if (resultset != null) resultset.close();
+            if (prep != null) prep.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao fechar recursos: " + e.getMessage());
         }
     }
 }
