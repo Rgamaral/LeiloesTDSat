@@ -1,12 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+import java.sql.SQLException;
 
-/**
- *
- * @author Adm
- */
 public class ProdutosDTO {
     private Integer id;
     private String nome;
@@ -29,6 +22,20 @@ public class ProdutosDTO {
         return status;
     }
 
+    public void venderProduto(int id) {
+        conn = new conectaDAO().connectDB();
+        
+        try {
+            String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
+            prep = conn.prepareStatement(sql);
+            prep.setInt(1, id);
+            prep.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Produto vendido com sucesso!");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao vender produto: " + e.getMessage());
+        }
+    }
+    
     public void setId(Integer id) {
         this.id = id;
     }
@@ -44,5 +51,4 @@ public class ProdutosDTO {
     public void setStatus(String status) {
         this.status = status;
     }
-    
 }

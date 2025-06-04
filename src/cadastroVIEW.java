@@ -140,17 +140,32 @@ public class cadastroVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_cadastroNomeActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        try {
         ProdutosDTO produto = new ProdutosDTO();
         String nome = cadastroNome.getText();
         String valor = cadastroValor.getText();
-        String status = "A Venda";
+        
+        // Validação dos campos
+        if(nome.isEmpty() || valor.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+            return;
+        }
+        
         produto.setNome(nome);
         produto.setValor(Integer.parseInt(valor));
-        produto.setStatus(status);
+        produto.setStatus("A Venda"); // Status padrão
         
         ProdutosDAO produtodao = new ProdutosDAO();
         produtodao.cadastrarProduto(produto);
         
+        // Limpa os campos após salvar
+        cadastroNome.setText("");
+        cadastroValor.setText("");
+        
+        JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
+    } catch(NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "O valor deve ser um número válido!");
+    } 
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutosActionPerformed

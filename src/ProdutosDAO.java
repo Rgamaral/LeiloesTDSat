@@ -47,10 +47,6 @@ public class ProdutosDAO {
         JOptionPane.showMessageDialog(null, "Erro ao listar: " + e.getMessage());
     }
     return listagem;
-    }
-    
-    
-    
-        
+    }       
 }
 
