@@ -7,13 +7,11 @@ public class ConectaDAO {
     
     public Connection connectDB() {
         try {
-            // URL de conexão com o banco uc11
             String url = "jdbc:mysql://localhost:3306/uc11?useSSL=false" +
                         "&allowPublicKeyRetrieval=true" +
                         "&serverTimezone=UTC" +
                         "&autoReconnect=true";
             
-            // Credenciais de acesso
             String user = "root";
             String password = "v1e2r3a4";
             
@@ -28,7 +26,6 @@ public class ConectaDAO {
         }
     }
     
-    // Método para fechar a conexão (opcional, mas recomendado)
     public void disconnectDB() {
         try {
             if (conn != null && !conn.isClosed()) {

@@ -19,7 +19,7 @@ public class ProdutosDAO {
             String sql = "INSERT INTO produtos(nome, valor, status) VALUES(?,?,?)";
             prep = conn.prepareStatement(sql);
             prep.setString(1, produto.getNome());
-            prep.setInt(2, produto.getValor());
+            prep.setDouble(2, produto.getValor());
             prep.setString(3, produto.getStatus());
             prep.executeUpdate();
             JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
@@ -43,7 +43,7 @@ public class ProdutosDAO {
                 ProdutosDTO produto = new ProdutosDTO();
                 produto.setId(resultset.getInt("id"));
                 produto.setNome(resultset.getString("nome"));
-                produto.setValor(resultset.getInt("valor"));
+                produto.setValor(resultset.getDouble("valor"));
                 produto.setStatus(resultset.getString("status"));
                 listagem.add(produto);
             }
@@ -69,6 +69,32 @@ public class ProdutosDAO {
         } finally {
             closeResources();
         }
+    }
+    
+    public ArrayList<ProdutosDTO> listarProdutosVendidos() {
+        ArrayList<ProdutosDTO> lista = new ArrayList<>();
+        conn = new ConectaDAO().connectDB();
+        
+        try {
+            String sql = "SELECT * FROM produtos WHERE status = 'Vendido'";
+            prep = conn.prepareStatement(sql);
+            resultset = prep.executeQuery();
+            
+            while (resultset.next()) {
+                ProdutosDTO produto = new ProdutosDTO();
+                produto.setId(resultset.getInt("id"));
+                produto.setNome(resultset.getString("nome"));
+                produto.setValor(resultset.getDouble("valor"));
+                produto.setStatus(resultset.getString("status"));
+                lista.add(produto);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao listar produtos vendidos: " + e.getMessage());
+        } finally {
+            closeResources();
+        }
+        
+        return lista;
     }
     
     private void closeResources() {
